@@ -5,7 +5,8 @@ import {
   Get,
   Param,
   Patch,
-  Post, Query
+  Post,
+  Query
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './tasks.model';
@@ -17,7 +18,8 @@ import { GetTasksFilterDto } from './dto/get-tasks-fliter.dto';
 // A controller is responsible for handling incoming requests and returning responses to the client.
 @Controller('tasks')
 export class TasksController {
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService) {
+  }
 
   @Get()
   getAllTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
@@ -42,10 +44,9 @@ export class TasksController {
   @Patch('/:id/status')
   updateTaskStatus(
     @Param('id') id: string,
-    @Body('status') status: TaskStatus,
-  ): Task | string {
-    const updateStatusTask: UpdateStatusTaskDto = { id, status };
-    return this.tasksService.updateTaskStatus(updateStatusTask);
+    @Body('status') updateStatus: UpdateStatusTaskDto
+  ): Task {
+    return this.tasksService.updateTaskStatus(id, updateStatus.status)
   }
 
   @Delete('/:id')
