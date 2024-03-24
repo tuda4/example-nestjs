@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query
@@ -33,14 +34,14 @@ export class TasksController {
   // }
 
   @Get('/:id')
-  getTaskById(@Param('id') id: string): Promise<Task> {
+  getTaskById(@Param('id', ParseUUIDPipe) id: string): Promise<Task> {
     return this.tasksService.getTaskById(id);
   }
 
-  // @Post()
-  // createNewTask(@Body() createTask: CreateTaskDto): Task {
-  //   return this.tasksService.createTask(createTask);
-  // }
+  @Post()
+  createNewTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksService.createTask(createTaskDto);
+  }
 
   // @Patch('/:id/status')
   // updateTaskStatus(
