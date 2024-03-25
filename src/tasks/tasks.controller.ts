@@ -7,7 +7,8 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  Query
+  Query,
+  UseGuards
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -15,10 +16,12 @@ import { UpdateStatusTaskDto } from './dto/update-status-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-fliter.dto';
 import { Task } from './tasks.entity';
 import { ResponsespPanigation } from './dto/responses-tasks.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 // The @Controller() decorator is a class decorator that defines a controller.
 // A controller is responsible for handling incoming requests and returning responses to the client.
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   constructor(private tasksService: TasksService) {
   }
